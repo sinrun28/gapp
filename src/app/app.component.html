@@ -1,0 +1,549 @@
+<app-preloader id="preloader"></app-preloader>
+
+
+
+<div id="customization">
+  <div class="titles">
+    <div class="currentViewName">
+      <span class="icon-upload2" (click)="uploadViews()"></span>
+      {{ currentView_name }}
+    </div>
+
+    <div>
+      <span (click)="customizePage()" [class.active]="isCustomize" class="customize-page">Customize page</span>
+      <span class="add icon-plus" [class.hidden]="!isCustomize"></span>
+
+      <select id="viewsController" [class.hidden]="!isCustomize">
+        <option *ngFor="let item of viewNames">{{ item }}</option>
+      </select>
+
+      <div class="viewAddRemove" [class.hidden]="!isCustomize">
+        <span class="icon-plus" (click)="addView()"></span>
+        <span class="icon-minus" (click)="removeView()"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="grid1" class="grid-stack" [class.customize]="isCustomize">
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.currentData.x"
+  [attr.data-gs-y]="currentView_values.currentData.y"
+  [class.hidden]="!currentView_values.currentData.on"
+  data-currentData
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" [attr.data-exp-width]="apiData.currentData.length" data-orgn-width="2" data-current-data>
+
+      <div class="exp-card" *ngFor="let item of apiData.currentData; index as i"
+      [style.width]="apiData.currentData_width+'px'"
+      [style.height]="apiData.currentData_height+'px'"
+      [style.left]="apiData.currentData_width*i+ i*24 +'px'" >
+        <div class="grid-label">
+          {{ item.name }}
+        </div>
+
+        <div class="grid-data">
+          {{ item.val }}
+        </div>
+      </div>
+
+      <span class="exp icon-expand"></span>
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Current Data -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.numberOfCompartmentUsers.x"
+  [attr.data-gs-y]="currentView_values.numberOfCompartmentUsers.y"
+  [class.hidden]="!currentView_values.numberOfCompartmentUsers.on"
+  data-numberOfCompartmentUsers
+  data-gs-width="2" data-gs-height="5">
+    <div class="grid-stack-item-content">
+
+        <div class="grid-label">
+          Number of Comp Users
+        </div>
+
+        <div class="grid-data">
+          {{ apiData.numberOfCompartment }}
+        </div>
+
+        <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Number of Compartment Users -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.numberOfContainers.x"
+  [attr.data-gs-y]="currentView_values.numberOfContainers.y"
+  [class.hidden]="!currentView_values.numberOfContainers.on"
+  data-numberOfContainers
+  data-gs-width="6" data-gs-height="9">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        No. of Containers Usage
+      </div>
+
+      <div class="pie-chart1-container">
+        <canvas id="pie-chart1" width="200px" height="200"></canvas>
+      </div>
+
+      <div class="bar-chart1-container">
+        <canvas id="bar-chart1" width="200px" height="100"></canvas>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- No. of Containers -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.totalDivisions.x"
+  [attr.data-gs-y]="currentView_values.totalDivisions.y"
+  [class.hidden]="!currentView_values.totalDivisions.on"
+  data-totalDivisions
+  data-gs-width="4" data-gs-height="6">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        Total Divisions / Regions
+      </div>
+
+      <div class="bar-chart2-container">
+        <canvas id="bar-chart2" width="200" height="130"></canvas>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Total Divisions -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.ERPActiveUsers.x"
+  [attr.data-gs-y]="currentView_values.ERPActiveUsers.y"
+  [class.hidden]="!currentView_values.ERPActiveUsers.on"
+  data-ERPActiveUsers
+  data-gs-width="4" data-gs-height="5">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        ERP Active Users
+      </div>
+
+      <div class="grid-data-compact" style="color:#ef9d38">
+        <span class="label"> HO </span>
+        <br>
+        <span class="data"> {{ apiData.erpUsers.ho }} </span>
+      </div>
+
+      <div class="grid-data-compact" style="color:#ea642b">
+        <span class="label"> Mumbai </span>
+        <br>
+        <span class="data"> {{ apiData.erpUsers.mumbai }} </span>
+      </div>
+
+      <div class="grid-data-compact" style="color:#f7d247">
+        <span class="label"> Sing </span>
+        <br>
+        <span class="data"> {{ apiData.erpUsers.sing }} </span>
+      </div>
+
+      <div class="grid-data-compact" style="color:#2052d1">
+        <span class="label"> Chennai </span>
+        <br>
+        <span class="data"> {{ apiData.erpUsers.chennai }} </span>
+      </div>
+
+      <div class="grid-data-compact" style="color:#428fcf">
+        <span class="label"> Dubai </span>
+        <br>
+        <span class="data"> {{ apiData.erpUsers.dubai }} </span>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- ERP Active Users -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.ERPAccessLocations.x"
+  [attr.data-gs-y]="currentView_values.ERPAccessLocations.y"
+  [class.hidden]="!currentView_values.ERPAccessLocations.on"
+  data-ERPAccessLocations
+  data-gs-width="8" data-gs-height="7">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        ERP Access Locations
+      </div>
+
+      <div id="map"></div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- ERP Access Locations -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.vouchersUsage.x"
+  [attr.data-gs-y]="currentView_values.vouchersUsage.y"
+  [class.hidden]="!currentView_values.vouchersUsage.on"
+  data-vouchersUsage
+  data-gs-width="4" data-gs-height="6">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        Vouchers Usage
+      </div>
+
+      <div class="bar-chart3-container">
+        <canvas id="bar-chart3" width="200" height="130"></canvas>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Vouchers Usage -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.usersUsingBoiAuth.x"
+  [attr.data-gs-y]="currentView_values.usersUsingBoiAuth.y"
+  [class.hidden]="!currentView_values.usersUsingBoiAuth.on"
+  data-usersUsingBoiAuth
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        Users using Bio Auth
+      </div>
+
+      <div class="grid-data data-small">
+        {{ apiData.bioAuth }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Users using Bio Auth -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.usersUsingIdCards.x"
+  [attr.data-gs-y]="currentView_values.usersUsingIdCards.y"
+  [class.hidden]="!currentView_values.usersUsingIdCards.on"
+  data-usersUsingIdCards
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" style="color:#8165a2">
+
+      <div class="grid-label">
+        Users using ID Cards
+      </div>
+
+      <div class="grid-data data-small">
+        {{ apiData.idCards }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Users using ID Cards -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.trackersDeployed.x"
+  [attr.data-gs-y]="currentView_values.trackersDeployed.y"
+  [class.hidden]="!currentView_values.trackersDeployed.on"
+  data-trackersDeployed
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" style="color:#9bbb58">
+
+      <div class="grid-label">
+        Trackers Deployed
+      </div>
+
+      <div class="grid-data data-small">
+        {{ apiData.trackersDeployed }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Trackers Deployed -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.realTimeDataPoints.x"
+  [attr.data-gs-y]="currentView_values.realTimeDataPoints.y"
+  [class.hidden]="!currentView_values.realTimeDataPoints.on"
+  data-realTimeDataPoints
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" style="color:#428fcf">
+
+      <div class="grid-label">
+        Real time data points
+      </div>
+
+      <div class="grid-data data-small">
+        {{ apiData.realtimeData }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Real time data points -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.fileApprovedToday.x"
+  [attr.data-gs-y]="currentView_values.fileApprovedToday.y"
+  [class.hidden]="!currentView_values.fileApprovedToday.on"
+  data-fileApprovedToday
+  data-gs-width="8" data-gs-height="6">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        File Approved Today [date]
+      </div>
+
+      <div class="bar-chart4-container">
+        <canvas id="bar-chart4" width="200px" height="90"></canvas>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- File Approved Today -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.containerForwardingApproved.x"
+  [attr.data-gs-y]="currentView_values.containerForwardingApproved.y"
+  [class.hidden]="!currentView_values.containerForwardingApproved.on"
+  data-containerForwardingApproved
+  data-gs-width="2" data-gs-height="5">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        Container Forwarding Approved
+      </div>
+
+      <div class="grid-data">
+        {{ apiData.containerApproved }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Container Forwarding Approved -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.packagesUnloaded.x"
+  [attr.data-gs-y]="currentView_values.packagesUnloaded.y"
+  [class.hidden]="!currentView_values.packagesUnloaded.on"
+  data-packagesUnloaded
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" [attr.data-exp-width]="apiData.packagesUnloaded.length" data-orgn-width="2" data-packages-unloaded>
+
+      <div class="exp-card" *ngFor="let item of apiData.packagesUnloaded; index as i"
+      [style.width]="apiData.packagesUnloaded_width+'px'"
+      [style.height]="apiData.packagesUnloaded_height+'px'"
+      [style.left]="apiData.packagesUnloaded_width*i+ i*24 +'px'">
+        <div class="grid-label">
+          {{ item.name }}
+        </div>
+
+        <div class="grid-data data-small">
+          {{ item.val }}
+        </div>
+      </div>
+
+      <span class="exp icon-expand"></span>
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Packages unloaded -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.numberOfContainersLoaded.x"
+  [attr.data-gs-y]="currentView_values.numberOfContainersLoaded.y"
+  [class.hidden]="!currentView_values.numberOfContainersLoaded.on"
+  data-numberOfContainersLoaded
+  data-gs-width="2" data-gs-height="9">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        No. of Containers
+      </div>
+
+      <div class="pie-chart2-container">
+        <canvas id="pie-chart2" width="200px" height="200"></canvas>
+      </div>
+
+      <br><br>
+
+      <div class="grid-label">
+        No. of Packages
+      </div>
+
+      <div class="pie-chart3-container">
+        <canvas id="pie-chart3" width="200px" height="200"></canvas>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- No. of containers loaded / unloaded -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.onFieldOfficers.x"
+  [attr.data-gs-y]="currentView_values.onFieldOfficers.y"
+  [class.hidden]="!currentView_values.onFieldOfficers.on"
+  data-onFieldOfficers
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        On field Officers
+      </div>
+
+      <div class="grid-data data-small">
+        {{ apiData.fieldOfficers }}
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- On field Officers -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.securitySettingsUpdates.x"
+  [attr.data-gs-y]="currentView_values.securitySettingsUpdates.y"
+  [class.hidden]="!currentView_values.securitySettingsUpdates.on"
+  data-securitySettingsUpdates
+  data-gs-width="6" data-gs-height="4">
+    <div class="grid-stack-item-content">
+
+      <div class="grid-label">
+        Security Setting Updates
+      </div>
+
+      <div class="data-card" *ngFor="let item of apiData.securityUpdates | slice:0:3">
+        <div> {{ item.event }} </div>
+
+        <div class="data">
+          {{ item.name }}
+          <br> <span class="data-action"> {{ item.action }} </span>
+        </div>
+
+        <div class="data-time">{{ item.date }}</div>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Security Setting Updates -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.craneUsage.x"
+  [attr.data-gs-y]="currentView_values.craneUsage.y"
+  [class.hidden]="!currentView_values.craneUsage.on"
+  data-craneUsage
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content" style="color:#428fcf" [attr.data-exp-width]="apiData.craneUsage.length" data-orgn-width="2" data-crane-usage>
+
+      <div class="exp-card" *ngFor="let item of apiData.craneUsage; index as i"
+      [style.width]="apiData.craneUsage_width+'px'"
+      [style.height]="apiData.craneUsage_height+'px'"
+      [style.left]="apiData.craneUsage_width*i+ i*24 +'px'">
+        <div class="grid-label">
+          Crane Usage
+        </div>
+
+        <div class="usage-data">
+          <div class="name"> {{ item.name }} </div>
+
+          <div class="circle">
+            <div class="circle-content">
+              <span class="number">{{ item.val }}</span>
+              <br> MINUTES
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span class="exp icon-expand"></span>
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- Crane Usage -->
+
+
+
+  <div class="grid-stack-item"
+  [attr.data-gs-x]="currentView_values.unlabledData.x"
+  [attr.data-gs-y]="currentView_values.unlabledData.y"
+  [class.hidden]="!currentView_values.unlabledData.on"
+  data-unlabledData
+  data-gs-width="2" data-gs-height="4">
+    <div class="grid-stack-item-content">
+
+      <div class="unlabeled-data" style="color:#999999">
+        <div class="data-text"> Added Clients </div>
+        <div class="data-number"> {{ apiData.untitled.clients }} </div>
+      </div>
+
+      <div class="unlabeled-data" style="color:#9bbb58">
+        <div class="data-text"> Added Partners </div>
+        <div class="data-number"> {{ apiData.untitled.partners }} </div>
+      </div>
+
+      <span class="remove icon-minus"></span>
+
+    </div>
+  </div> <!-- unlabeled data -->
+</div>
+
+
+
+<div class="add-widgets" [class.active]="isAddWidget">
+  <div class="widgets-container">
+    <div class="widget-name" *ngFor="let item of viewItems" (click)="addWidget(item)">
+      {{ item.name }}
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
